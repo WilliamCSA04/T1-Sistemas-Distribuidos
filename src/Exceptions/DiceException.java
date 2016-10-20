@@ -3,12 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Initializer;
+package Exceptions;
 
 /**
  *
  * @author realnetwoking
  */
-public class App {
+public class DiceException extends Exception{
+    
+    public DiceException(){
+        
+    }
+    
+    public DiceException(String message){
+        super(message);
+    }
     
 }
