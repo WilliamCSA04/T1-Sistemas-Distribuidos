@@ -21,13 +21,13 @@ public final class Dice {
     public static List<Integer> rollDice(int rollTimes) throws DiceException{
         rollTimesArgumentValidation(rollTimes);
         List<Integer> diceResults = new ArrayList<>();
-        addDiceRollResultsToList(rollTimes, diceResults);
+        addAllDiceRollResultsToList(rollTimes, diceResults);
         return diceResults;
     }
     
-    private static void addDiceRollResultsToList(int rollTimes, List<Integer> diceResults){
+    private static void addAllDiceRollResultsToList(int rollTimes, List<Integer> diceResults){
         for(int i = 0; i < rollTimes; i++){
-            int diceResult = dice.nextInt(rollTimes);
+            int diceResult = dice.nextInt(6);
             diceResult++;
             diceResults.add(diceResult);
         }
