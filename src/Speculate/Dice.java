@@ -17,6 +17,8 @@ public final class Dice {
      * @param rollTimes Number of times that a dice must roll
      * @return a list with all the results of a dice or a IllegalArgumentException
      * if the rollTimes bigger than 15 or lower than 1
+     * @throws Exceptions.DiceException Throws this exception if the passing 
+     * parameter are bigger than 15 or lower than 1
      */
     public static List<Integer> rollDice(int rollTimes) throws DiceException{
         rollTimesArgumentValidation(rollTimes);
