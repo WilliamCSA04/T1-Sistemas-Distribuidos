@@ -12,10 +12,19 @@ package Client;
 public class Player {
     
     String name;
-    
+    boolean playTurn;
     
     public Player(String name){
         this.name = name;
     }
+
+    public boolean isPlayTurn() {
+        return playTurn;
+    }
+
+    public void setPlayTurn(boolean playTurn) {
+        this.playTurn = playTurn;
+    }
+    
     
 }
