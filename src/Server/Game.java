@@ -23,20 +23,41 @@ public class Game {
         return isPlayerTurn;
     }
 
-    public boolean play(Player player, int rollDiceTimes) {
+    public int play(Player player, int rollDiceTimes) {
 
         boolean isNotPlayerAllowedToPlay = !checkIfPlayerIsAllowedToPlay(player);
         if (isNotPlayerAllowedToPlay) {
-            return false;
+            return -1;
         }
         try {
             List<Integer> diceResults = rollDice(rollDiceTimes, player);
+            if(isGameOver(player)){
+                return 1;
+            }
             afterTurn();
+            return 0;
         } catch (DiceException ex) {
-            return false;
+            return -1;
         }
-        return true;
+        
 
+    }
+    
+    public Player getPlayerThatHasToPlay(){
+        boolean isFirstPlayersTurn = player1.isPlayTurn();
+        if(isFirstPlayersTurn){
+            return player1;
+        }
+        return player2;
+    }
+    
+    private boolean isGameOver(Player player){
+        int leftBalls = player.getActualBallsQuantity();
+        boolean playerDoesNotHaveBalls = leftBalls == 0;
+        if(playerDoesNotHaveBalls){
+            return true;
+        }
+        return false;
     }
 
     private List<Integer> rollDice(int rollDiceTimes, Player player) throws DiceException {
