@@ -12,7 +12,11 @@ public class Board {
         spaces = new boolean[]{true, false, true, false, true};
     }
     
-    
+    /**
+     * This method must be use to see if one specific board space.
+     * @param space Number of the space on the board. The valid range is 0 until 4, out of this range throws a IllegalArgumentException
+     * @return return true if the space was occupied or false if was empty
+     */
     public boolean playResult(int space){
         isAValueArgument(space);
         boolean actualValue =  spaces[space];
