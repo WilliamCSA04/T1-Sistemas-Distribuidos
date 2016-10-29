@@ -33,7 +33,7 @@ public class Game {
         }
         try {
             List<Integer> diceResults = rollDice(rollDiceTimes, player);
-
+            afterTurn();
         } catch (DiceException ex) {
             return false;
         }
