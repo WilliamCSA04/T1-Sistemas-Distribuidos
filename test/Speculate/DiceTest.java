@@ -5,6 +5,7 @@
  */
 package Speculate;
 
+import Client.Player;
 import Exceptions.DiceException;
 import java.util.List;
 import java.util.Random;
@@ -49,7 +50,8 @@ public class DiceTest {
         Random r = new Random();
         int parameter = r.nextInt(15)+1;
         int rollTimes = parameter;
-        List<Integer> resultList = Dice.rollDice(rollTimes);
+        Player player = new Player("test");
+        List<Integer> resultList = Dice.rollDice(rollTimes, player);
         for (Integer result : resultList) {
             boolean isOutOfCorrectRange = result < 1 || result > 6;
             if(isOutOfCorrectRange){
@@ -65,14 +67,16 @@ public class DiceTest {
     public void testRollDiceThrowingExceptionPassingLowLimitByOne() throws DiceException {
         System.out.println("rollDice");
         int rollTimes = 0;
-        Dice.rollDice(rollTimes);
+        Player player = new Player("test");
+        Dice.rollDice(rollTimes, player);
     }
     
     @Test(expected=DiceException.class)
     public void testRollDiceThrowingExceptionPassingHigherLimitByOne() throws DiceException {
         System.out.println("rollDice");
         int rollTimes = 16;
-        Dice.rollDice(rollTimes);
+        Player player = new Player("test");
+        Dice.rollDice(rollTimes, player);
     }
     
     

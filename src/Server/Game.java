@@ -5,8 +5,6 @@ import Exceptions.DiceException;
 import Speculate.Board;
 import Speculate.Dice;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Game {
 
@@ -42,7 +40,7 @@ public class Game {
     }
 
     private List<Integer> rollDice(int rollDiceTimes, Player player) throws DiceException {
-        List<Integer> diceResults = Dice.rollDice(rollDiceTimes);
+        List<Integer> diceResults = Dice.rollDice(rollDiceTimes, player);
         for (Integer diceResult : diceResults) {
             updatePlayersBalls(diceResult, player);
         }

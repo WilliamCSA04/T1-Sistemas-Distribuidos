@@ -1,5 +1,6 @@
 package Speculate;
 
+import Client.Player;
 import Exceptions.DiceException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,9 @@ public final class Dice {
      * @throws Exceptions.DiceException Throws this exception if the passing 
      * parameter are bigger than 15 or lower than 1
      */
-    public static List<Integer> rollDice(int rollTimes) throws DiceException{
-        rollTimesArgumentValidation(rollTimes);
+    public static List<Integer> rollDice(int rollTimes, Player player) throws DiceException{
+        
+        rollTimesArgumentValidation(rollTimes, player);
         List<Integer> diceResults = new ArrayList<>();
         addAllDiceRollResultsToList(rollTimes, diceResults);
         return diceResults;
@@ -35,8 +37,9 @@ public final class Dice {
         }
     }
     
-    private static void rollTimesArgumentValidation(int rollTimes) throws DiceException{
-        boolean invalid = rollTimes > 15 || rollTimes <= 0;
+    private static void rollTimesArgumentValidation(int rollTimes, Player player) throws DiceException{
+        int maxRollTimes = player.getActualBallsQuantity();
+        boolean invalid = rollTimes > maxRollTimes || rollTimes <= 0;
         if(invalid){
            throw new DiceException();
         }
