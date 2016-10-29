@@ -2,14 +2,22 @@ package Speculate;
 
 public class Board {
     
-    boolean spaces[];
+    boolean[] board;
     
     public Board(){
         populateInitialSpaces();
     }
     
     private void populateInitialSpaces(){
-        spaces = new boolean[]{true, false, true, false, true};
+        board = new boolean[]{true, false, true, false, true};
+    }
+
+    public boolean[] getBoard() {
+        return board;
+    }
+
+    public void setOneSpaceIntoBoard(int space) {
+        board[space] = !board[space];
     }
     
     /**
@@ -17,18 +25,6 @@ public class Board {
      * @param space Number of the space on the board. The valid range is 0 until 4, out of this range throws a IllegalArgumentException
      * @return return true if the space was occupied or false if was empty
      */
-    public boolean playResult(int space){
-        isAValueArgument(space);
-        boolean actualValue =  spaces[space];
-        spaces[space] = !actualValue;
-        return actualValue;
-    }
     
-    private void isAValueArgument(int argument){
-        boolean isOutOfRange = argument>4 || argument<0;
-        if(isOutOfRange){
-            throw new IllegalArgumentException();
-        }
-    }
     
 }
