@@ -37,6 +37,11 @@ public class Player {
         this.actualBallsQuantity = actualBallsQuantity;
     }
 
+    public String getName() {
+        return name;
+    }
+    
+
     
     
     

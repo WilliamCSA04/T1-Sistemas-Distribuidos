@@ -15,6 +15,8 @@ public class Game {
     public Game(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
+        player1.setPlayTurn(true);
+        player2.setPlayTurn(false);
         this.board = new Board();
     }
 
@@ -55,6 +57,7 @@ public class Game {
         int leftBalls = player.getActualBallsQuantity();
         boolean playerDoesNotHaveBalls = leftBalls == 0;
         if(playerDoesNotHaveBalls){
+            System.out.println("Vencedor: " + player.getName());
             return true;
         }
         return false;
@@ -95,6 +98,7 @@ public class Game {
 
     private boolean changeBoardAfterPlay(int space) {
         isAValueArgument(space);
+        space--;
         boolean[] board = this.board.getBoard();
         boolean actualValue = board[space];
         board[space] = !actualValue;
@@ -102,7 +106,7 @@ public class Game {
     }
 
     private void isAValueArgument(int argument) {
-        boolean isOutOfRange = argument > 4 || argument < 0;
+        boolean isOutOfRange = argument > 5 || argument < 1;
         if (isOutOfRange) {
             throw new IllegalArgumentException();
         }
@@ -119,8 +123,8 @@ public class Game {
     private void switchPlayerTurn() {
         boolean firstPlayerTurn = player1.isPlayTurn();
         boolean secondPlayerTurn = player2.isPlayTurn();
-        player1.setPlayTurn(firstPlayerTurn);
-        player2.setPlayTurn(secondPlayerTurn);
+        player1.setPlayTurn(!firstPlayerTurn);
+        player2.setPlayTurn(!secondPlayerTurn);
     }
 
 }
