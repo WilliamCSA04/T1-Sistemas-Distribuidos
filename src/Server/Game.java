@@ -75,11 +75,10 @@ public class Game {
     private void updatePlayersBalls(int diceResult, Player player) {
         if (diceResult == 6) {
             reducePlayerBallsQuantityAfterPlay(diceResult, player);
-            updateBallsOutOfGame();
         } else {
             boolean spaceWasOccupied = changeBoardAfterPlay(diceResult);
             if (spaceWasOccupied) {
-                addPlayerBallsQuantityAfterPlay(player);
+                addPlayerBallsQuantityAfterPlay(diceResult, player);
             } else {
                 reducePlayerBallsQuantityAfterPlay(diceResult, player);
             }
@@ -117,10 +116,11 @@ public class Game {
         board.setBallsOutOfGame(ballsOutOfGame);
     }
 
-    private void addPlayerBallsQuantityAfterPlay(Player player) {
+    private void addPlayerBallsQuantityAfterPlay(int diceResult, Player player) {
         int actualBallsQuantity = player.getActualBallsQuantity();
         actualBallsQuantity++;
         player.setActualBallsQuantity(actualBallsQuantity);
+        updateSpacesForAdd(diceResult);
     }
 
     private boolean changeBoardAfterPlay(int space) {

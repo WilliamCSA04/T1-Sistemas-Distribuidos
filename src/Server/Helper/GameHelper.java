@@ -18,6 +18,7 @@ public final class GameHelper {
     }
     
     private static String updateSentence(String sentence, int indexOfOldCharacter, char newChar){
+        
         char[] arrayFromSentence = sentence.toCharArray();
         arrayFromSentence[indexOfOldCharacter] = newChar;
         return String.valueOf(arrayFromSentence);
