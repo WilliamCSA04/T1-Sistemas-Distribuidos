@@ -2,6 +2,7 @@ package Server;
 
 import Client.Player;
 import Exceptions.DiceException;
+import Server.Helper.GameHelper;
 import Speculate.Board;
 import Speculate.Dice;
 import java.util.List;
@@ -73,21 +74,47 @@ public class Game {
 
     private void updatePlayersBalls(int diceResult, Player player) {
         if (diceResult == 6) {
-            reducePlayerBallsQuantityAfterPlay(player);
+            reducePlayerBallsQuantityAfterPlay(diceResult, player);
+            updateBallsOutOfGame();
         } else {
             boolean spaceWasOccupied = changeBoardAfterPlay(diceResult);
             if (spaceWasOccupied) {
                 addPlayerBallsQuantityAfterPlay(player);
             } else {
-                reducePlayerBallsQuantityAfterPlay(player);
+                reducePlayerBallsQuantityAfterPlay(diceResult, player);
             }
         }
     }
 
-    private void reducePlayerBallsQuantityAfterPlay(Player player) {
+    private void reducePlayerBallsQuantityAfterPlay(int diceResult, Player player) {
         int actualBallsQuantity = player.getActualBallsQuantity();
         actualBallsQuantity--;
         player.setActualBallsQuantity(actualBallsQuantity);
+        boolean haveToUpdateBallsOuOfGame = diceResult == 6;
+        if(haveToUpdateBallsOuOfGame){
+            updateBallsOutOfGame();
+        }else{
+            updateSpacesForReduce(diceResult);
+        }
+        
+    }
+    
+    private void updateSpacesForAdd(int diceResult){
+        String spaces = board.getSpaces();
+        spaces = GameHelper.updateSpacesForAddHelper(diceResult, spaces);
+        board.setSpaces(spaces);
+    }
+    
+    private void updateSpacesForReduce(int diceResult){
+        String spaces = board.getSpaces();
+        spaces = GameHelper.updateSpacesForReduceHelper(diceResult, spaces);
+        board.setSpaces(spaces);
+    }
+    
+    private void updateBallsOutOfGame(){
+        String ballsOutOfGame = board.getBallsOutOfGame();
+        ballsOutOfGame = GameHelper.updateBallsOutOfGameHelper(ballsOutOfGame);
+        board.setBallsOutOfGame(ballsOutOfGame);
     }
 
     private void addPlayerBallsQuantityAfterPlay(Player player) {

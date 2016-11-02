@@ -28,6 +28,14 @@ public class Board {
         this.spaces = spaces;
     }
 
+    public String getSpaces() {
+        return spaces;
+    }
+
+    public String getBallsOutOfGame() {
+        return ballsOutOfGame;
+    }
+
     public void setBallsOutOfGame(String ballsOutOfGame) {
         this.ballsOutOfGame = ballsOutOfGame;
     }
