@@ -34,6 +34,7 @@ public class Game {
         }
         try {
             rollDice(rollDiceTimes, player);
+            System.out.println(board.returnBoardAsString());
             if(isGameOver(player)){
                 return 1;
             }

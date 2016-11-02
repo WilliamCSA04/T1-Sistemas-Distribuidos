@@ -40,11 +40,15 @@ public class Board {
         this.ballsOutOfGame = ballsOutOfGame;
     }
     
-    public String returnBoardAsAString() {
-       return spaces + "\n" + ballsOutOfGame;
+    public String returnBoardAsString() {
+       return createStringBoard();
     }
     
-    
+    private String createStringBoard(){
+        String boardHeader = "=======SPECULATE=======";
+        String newLine = "\n";
+        return newLine + boardHeader + newLine + spaces + newLine + ballsOutOfGame + newLine;
+    }
     
     
 }
