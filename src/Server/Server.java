@@ -16,6 +16,10 @@ public class Server extends UnicastRemoteObject implements IServer{
     
     public Server(int numberOfGames) throws RemoteException{
         this.numberOfGames = numberOfGames;
+        clientList = new Client[numberOfGames];
+        for (int i = 0; i < numberOfGames; i++) {
+            clientList[i] = new Client();
+}
     }
     
     public int registerPlayer(String name) throws RemoteException {
