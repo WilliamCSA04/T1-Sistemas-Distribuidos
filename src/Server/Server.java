@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Server;
 
 import Client.Client;
@@ -15,7 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class Server extends UnicastRemoteObject implements IServer{
     
-    private static final long serialVersionUID = 1L;
+    private static final long SERIAL_VERSION_UID = 1L;
     private Client[] clientList;
     private int numberOfGames;
     
@@ -43,5 +38,20 @@ public class Server extends UnicastRemoteObject implements IServer{
         }
         return status;
 }
+
+    @Override
+    public String getBoard(int userID) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int finishSession(int userID) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int sendPlay(int userID) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
