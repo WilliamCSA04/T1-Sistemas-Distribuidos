@@ -33,7 +33,7 @@ public class Game {
             return -1;
         }
         try {
-            List<Integer> diceResults = rollDice(rollDiceTimes, player);
+            rollDice(rollDiceTimes, player);
             if(isGameOver(player)){
                 return 1;
             }
@@ -64,12 +64,11 @@ public class Game {
         return false;
     }
 
-    private List<Integer> rollDice(int rollDiceTimes, Player player) throws DiceException {
+    private void rollDice(int rollDiceTimes, Player player) throws DiceException {
         List<Integer> diceResults = Dice.rollDice(rollDiceTimes, player);
         for (Integer diceResult : diceResults) {
             updatePlayersBalls(diceResult, player);
         }
-        return diceResults;
     }
 
     private void updatePlayersBalls(int diceResult, Player player) {
