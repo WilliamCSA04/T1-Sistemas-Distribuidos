@@ -2,7 +2,9 @@ package Speculate;
 
 public class Board {
     
-    boolean[] board;
+    private boolean[] board;
+    private String spaces;
+    private String ballsOutOfGame;
     
     public Board(){
         populateInitialSpaces();
@@ -10,6 +12,8 @@ public class Board {
     
     private void populateInitialSpaces(){
         board = new boolean[]{true, false, true, false, true};
+        spaces = "0_0_0";
+        ballsOutOfGame = "_________________________________";
     }
 
     public boolean[] getBoard() {
