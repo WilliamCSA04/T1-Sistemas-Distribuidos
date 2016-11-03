@@ -101,7 +101,7 @@ public class Server extends UnicastRemoteObject implements IServer {
     @Override
     public String getBoard(int gameID) throws RemoteException {
         Game game = findGameByID(gameID);
-        return game.boardAsString();
+        return gameList[0].boardAsString();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         if(register == null){
             return -2;
         }
-        return game.play(register.getPlayer(), rollTimes);
+        return gameList[0].play(register.getPlayer(), rollTimes);
     }
     
     @Override
@@ -134,8 +134,8 @@ public class Server extends UnicastRemoteObject implements IServer {
         if(thereWasNotHowToAddPlayer){
             return -2;
         }
-        game.addPlayerToTheGame(register.getPlayer());
-        return game.start();
+        gameList[0].addPlayerToTheGame(register.getPlayer());
+        return gameList[0].start();
     }
 
     private Register findRegisterByID(int userID) throws RemoteException{

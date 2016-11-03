@@ -1,6 +1,8 @@
 package Speculate;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable{
     
     private boolean[] board;
     private String spaces;
