@@ -122,6 +122,24 @@ public class Server extends UnicastRemoteObject implements IServer {
         }
         return null;
     }
+    
+    private Game findGameByID(int gameID){
+        for (Game game : gameList) {
+            boolean isThisTheCorrectGame = game.getGameID() == gameID;
+            if(isThisTheCorrectGame){
+                return game;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean itsMyTurn(int userID, int gameID) throws RemoteException {
+        Register register = findRegisterByID(userID);
+        Game game = findGameByID(gameID);
+        boolean itsThisPlayersTurn = game.getPlayerThatHasToPlay().equals(register.getPlayer());
+        return itsThisPlayersTurn;
+    }
 
     
 

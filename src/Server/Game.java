@@ -40,6 +40,12 @@ public class Game {
         }
         return -1;
     }
+
+    public int getGameID() {
+        return gameID;
+    }
+    
+    
     
     private boolean isThisIDInvalid(int ID){
         for (Integer usedID : usedIDs) {
