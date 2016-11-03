@@ -6,6 +6,7 @@
 package Server;
 
 import Client.Player;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public class Register {
     private volatile boolean state;
     private Player player;
     private int userID;
+    private static volatile ArrayList<Integer> usedIDs = new ArrayList<>();
 
     public Register() {
         state = false;
@@ -28,10 +30,23 @@ public class Register {
             return false;
         }
         player = new Player(name);
-        userID = generateID();
+        int generatedID = generateID();
+        while(isThisIDInvalid(generatedID)){
+            generatedID = generateID();
+        }
+        userID = generatedID;
         state = true;
 
         return true;
+    }
+    
+    private boolean isThisIDInvalid(int ID){
+        for (Integer usedID : usedIDs) {
+            if(usedID == ID){
+                return true;
+            }
+        }
+        return false;
     }
 
     private int generateID() {
