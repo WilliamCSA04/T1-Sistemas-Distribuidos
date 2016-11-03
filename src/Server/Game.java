@@ -10,29 +10,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Game implements Serializable {
+public class Game{
 
     private Player player1;
     private Player player2;
     private Board board;
     private boolean gameReadyToStart;
-    private int gameID;
+    private int gameID = 0;
 
     public Game() {
         this.player1 = null;
         this.player2 = null;
         this.gameReadyToStart = false;
         this.board = new Board();
+        gameID = generateID();
     }
     
     public int start(){
         gameReadyToStart = player1 != null && player2 != null;
-        if(gameReadyToStart){ 
-            
-            gameReadyToStart = true;
-            player1.setPlayTurn(true);
-            player2.setPlayTurn(false);
-            gameID = generateID();
+        if(gameReadyToStart){            
+            gameReadyToStart = true;    
             return gameID;
         }
         return -1;
@@ -74,10 +71,12 @@ public class Game implements Serializable {
                     return false;
                 }
                 player2 = player;
+                player2.setPlayTurn(false);
                 return true;
             }
         }else{
             player1 = player;
+            player1.setPlayTurn(true);
             return true;
         }
     }
