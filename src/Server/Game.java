@@ -22,8 +22,7 @@ public class Game {
     }
     
     public boolean start(){
-        boolean isGameReadyToStart = checkIfHasTwoPlayers();
-        if(isGameReadyToStart){          
+        if(gameReadyToStart){          
             player1.setPlayTurn(true);
             player2.setPlayTurn(false);
             return true;

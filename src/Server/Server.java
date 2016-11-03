@@ -94,8 +94,17 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public int sendPlay(int userID) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int sendPlay(int index, int rollTimes) throws RemoteException {
+        if(index >= MAX_GAMES_RUNNING){
+            throw new IllegalArgumentException();
+        }
+        gameList[index].play(gameList[index].getPlayerThatHasToPlay(), rollTimes);
+        return 9;
+    }
+    
+    @Override
+    public boolean tryStart(int index) throws RemoteException{
+        return gameList[index].start();
     }
 
     
