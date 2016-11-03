@@ -27,7 +27,10 @@ public class Game {
     }
     
     public int start(){
-        if(gameReadyToStart){          
+        gameReadyToStart = player1 != null && player2 != null;
+        if(gameReadyToStart){ 
+            
+            gameReadyToStart = true;
             player1.setPlayTurn(true);
             player2.setPlayTurn(false);
             int generetedID = generateID();
@@ -86,7 +89,6 @@ public class Game {
                     return false;
                 }
                 player2 = player;
-                gameReadyToStart = true;
                 return true;
             }
         }else{
