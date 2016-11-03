@@ -27,15 +27,14 @@ public class ClientInitializer {
             System.out.println("Insira seu nome para se cadastrar: ");
             String name = input.nextLine();
             int userID = stub.registerPlayer(name);
+            System.out.println("Registrado!");
             
-            int gameID = stub.tryStart(userID);
             System.out.println("Esperando outro jogador...");
-            while (gameID == -1) {
+            int gameID;
+            do{
                 gameID = stub.tryStart(userID);
-                if(gameID<0){
-                    System.out.println("userID invalido - " +gameID +": Erro no registro");
             }
-            }
+            while (gameID == -1);
             System.out.println("response: " + userID);
             while (true) {
                 System.out.println("Jogo iniciado!");

@@ -31,11 +31,11 @@ public class Register {
         }
         player = new Player(name);
         int generatedID = generateID();
-        while(isThisIDInvalid(generatedID)){
-            generatedID = generateID();
-        }
+//        while(isThisIDInvalid(generatedID)){
+//            generatedID = generateID();
+//        }
         userID = generatedID;
-        usedIDs.add(userID);
+//        usedIDs.add(userID);
         state = true;
 
         return true;

@@ -113,7 +113,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         if(thereWasNotHowToAddPlayer){
             return -2;
         }
-        return game.start();
+        return gameList[0].start();
     }
 
     private Register findRegisterByID(int userID) {

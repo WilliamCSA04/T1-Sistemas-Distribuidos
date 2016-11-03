@@ -31,11 +31,11 @@ public class Game {
             player1.setPlayTurn(true);
             player2.setPlayTurn(false);
             int generetedID = generateID();
-            while(isThisIDInvalid(gameID)){
-                generetedID = generateID();
-            }
+//            while(isThisIDInvalid(gameID)){
+//                generetedID = generateID();
+//            }
             gameID = generetedID;
-            usedIDs.add(gameID);
+            //usedIDs.add(gameID);
             return gameID;
         }
         return -1;
