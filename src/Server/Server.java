@@ -46,7 +46,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return register.getUserID();
     }
     
-    private boolean checkIfThereIsPlayerWithSameName(String name){
+    private boolean checkIfThereIsPlayerWithSameName(String name) throws RemoteException{
         for (Register register : registerList) {
             if(register == null){
                 return false;
@@ -60,7 +60,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return true;
     }
     
-    private boolean addRegisterIntoNullSpace(Register newRegister){
+    private boolean addRegisterIntoNullSpace(Register newRegister) throws RemoteException{
         for (int actual = 0; actual < MAX_PLAYERS_ON_SERVER; actual++) {
             boolean isEmptySpace = registerList[actual] == null;
             if(isEmptySpace){
@@ -71,7 +71,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return false;
     }
     
-    private Game addPlayerToTheGameWhenTryStart(Register register){
+    private Game addPlayerToTheGameWhenTryStart(Register register) throws RemoteException{
         for (Game game : gameList) {
             boolean isGameDidNotHaveStarted = !game.isGameReadyToStart();
             if(isGameDidNotHaveStarted){
@@ -124,7 +124,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return gameList[0].start();
     }
 
-    private Register findRegisterByID(int userID) {
+    private Register findRegisterByID(int userID) throws RemoteException{
         for (Register register : registerList) {
             boolean isThisTheCorrectRegister = register.getUserID() == userID;
             if(isThisTheCorrectRegister){
@@ -134,7 +134,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return null;
     }
     
-    private Game findGameByID(int gameID){
+    private Game findGameByID(int gameID) throws RemoteException{
         for (Game game : gameList) {
             boolean isThisTheCorrectGame = game.getGameID() == gameID;
             if(isThisTheCorrectGame){
