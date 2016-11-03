@@ -38,12 +38,10 @@ public class ClientInitializer {
                 System.out.println("Codigo do jogo: " + gameID);
                 System.out.println("Espere sua vez...");
                 while (!stub.itsMyTurn(userID, gameID));
-                System.out.println("Estado atual do jogo: ");
-                System.out.println(stub.getBoard(gameID));
                 System.out.println("Quantas vezes deseja jogar o dado?");
                 String rollTimes = input.nextLine();
                 int result = stub.sendPlay(gameID, userID, Integer.parseInt(rollTimes));
-                if(result == 0){
+                if(result == 1){
                     System.out.println("PARABENS!!! VOCÊ VENCEU O JOGO :D");
                     break;
                 }
