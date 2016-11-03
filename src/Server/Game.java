@@ -12,13 +12,54 @@ public class Game {
     private Player player1;
     private Player player2;
     private Board board;
+    private boolean gameReadyToStart;
 
-    public Game(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        player1.setPlayTurn(true);
-        player2.setPlayTurn(false);
+    public Game() {
+        this.player1 = null;
+        this.player2 = null;
+        this.gameReadyToStart = false;
         this.board = new Board();
+    }
+    
+    public boolean start(){
+        boolean isGameReadyToStart = checkIfHasTwoPlayers();
+        if(isGameReadyToStart){
+            gameReadyToStart = true;
+            player1.setPlayTurn(true);
+            player2.setPlayTurn(false);
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean checkIfHasTwoPlayers(){
+        boolean thereIsTwoPlayers = player1 != null && player2 != null;
+        return thereIsTwoPlayers;
+    }
+    
+    public synchronized boolean addPlayerToTheGame(Player player){
+        boolean existPlayerOne = player1 != null;
+        if(existPlayerOne){
+            boolean existPlayerTwo = player2 != null;
+            if(existPlayerTwo){
+                return false;
+            }else{
+                boolean isTheNewPlayerEqualsToTheFirstPlayer = checkIfThePlayersAreEquals(player);
+                if(isTheNewPlayerEqualsToTheFirstPlayer){
+                    return false;
+                }
+                player2 = player;
+                return true;
+            }
+        }else{
+            player1 = player;
+            return true;
+        }
+    }
+    
+    private boolean checkIfThePlayersAreEquals(Player player){
+        boolean isTheNewPlayerTheSameObject = player.equals(player1);
+        return isTheNewPlayerTheSameObject;
     }
 
     private boolean isPlayerTurn(Player player) {
@@ -27,7 +68,9 @@ public class Game {
     }
 
     public int play(Player player, int rollDiceTimes) {
-
+        if(!gameReadyToStart){
+            return -2;
+        }
         boolean isNotPlayerAllowedToPlay = !checkIfPlayerIsAllowedToPlay(player);
         if (isNotPlayerAllowedToPlay) {
             return -1;
