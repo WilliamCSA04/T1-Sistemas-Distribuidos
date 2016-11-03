@@ -21,7 +21,7 @@ public class Server extends UnicastRemoteObject implements IServer {
     
     /**
     * Register Palyer.
-    * To Receive a name and invoke a method of the registered player of server
+    * To receive a name and invoke a method of the registered player of server
     *
     * @param name player name for the register
     * @throws java.rmi.RemoteException
@@ -46,6 +46,13 @@ public class Server extends UnicastRemoteObject implements IServer {
         return register.getUserID();
     }
     
+    /**
+    * Check if there is player with the same name.
+    * To receive a name and invoke a method of the registered player of server and check if there is player with the same name
+    *
+    * @param name player name for the register
+    * @throws java.rmi.RemoteException
+    */
     private boolean checkIfThereIsPlayerWithSameName(String name) throws RemoteException{
         for (Register register : registerList) {
             if(register == null){
