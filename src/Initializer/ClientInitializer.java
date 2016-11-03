@@ -40,7 +40,7 @@ public class ClientInitializer {
                 System.out.println("Jogo iniciado!");
                 System.out.println("Codigo do jogo: " + gameID);
                 System.out.println("Espere sua vez...");
-                while (!stub.itsMyTurn(userID, gameID));
+                while (!stub.itsMyTurn(userID));
                 System.out.println("Quantas vezes deseja jogar o dado?");
                 String rollTimes = input.nextLine();
                 int result = stub.sendPlay(gameID, userID, Integer.parseInt(rollTimes));
@@ -49,7 +49,7 @@ public class ClientInitializer {
                     break;
                 }
                 System.out.println(stub.playerStatus(userID));
-                System.out.println("Board: " + stub.getBoard(0));
+                System.out.println("Board: " + stub.getBoard(gameID));
             }
 
         } catch (Exception e) {

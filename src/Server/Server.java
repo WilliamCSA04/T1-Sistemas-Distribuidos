@@ -159,9 +159,8 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public boolean itsMyTurn(int userID, int gameID) throws RemoteException {
+    public boolean itsMyTurn(int userID) throws RemoteException {
         Register register = findRegisterByID(userID);
-        Game game = findGameByID(gameID);
         return register.getPlayer().isPlayTurn();
     }
 
