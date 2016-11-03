@@ -28,13 +28,18 @@ public class ClientInitializer {
             String name = input.nextLine();
             int userID = stub.registerPlayer(name);
             int gameID = stub.tryStart(userID);
+            System.out.println("Esperando outro jogador...");
             while (gameID == -1) {
                 gameID = stub.tryStart(userID);
             }
             System.out.println("response: " + userID);
             while (true) {
+                System.out.println("Jogo iniciado!");
+                System.out.println("Codigo do jogo: " + gameID);
                 System.out.println("Espere sua vez...");
                 while (!stub.itsMyTurn(userID, gameID));
+                System.out.println("Estado atual do jogo: ");
+                System.out.println(stub.getBoard(gameID));
                 System.out.println("Quantas vezes deseja jogar o dado?");
                 String rollTimes = input.nextLine();
                 int result = stub.sendPlay(gameID, userID, Integer.parseInt(rollTimes));

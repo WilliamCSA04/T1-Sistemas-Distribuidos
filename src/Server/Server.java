@@ -78,11 +78,9 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public String getBoard(int index) throws RemoteException {
-        if(index >= MAX_GAMES_RUNNING){
-            throw new IllegalArgumentException();
-        }
-        return gameList[index].boardAsString();
+    public String getBoard(int gameID) throws RemoteException {
+        Game game = findGameByID(gameID);
+        return game.boardAsString();
     }
 
     @Override
