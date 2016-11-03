@@ -18,7 +18,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         }
         registerList = new Register[MAX_PLAYERS_ON_SERVER];
     }
-
+    
+    /**
+    * Register Palyer.
+    * To Receive a name and invoke a method of the registered player of server
+    *
+    * @param name player name for the register
+    * @throws java.rmi.RemoteException
+    */
     @Override
     public int registerPlayer(String name) throws RemoteException {
         boolean isThisPlayerAlreadyCreated = checkIfThereIsPlayerWithSameName(name);
