@@ -34,10 +34,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         if(thereWasNoMoreSpaceForPlayers){
             return -3;
         }
-        boolean thereWasNotHowToAddPlayer = !addPlayerToTheGameAfterRegister(register);
-        if(thereWasNotHowToAddPlayer){
-            return -4;
-        }
+        
         
         return register.getUserID();
     }
@@ -67,7 +64,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         return false;
     }
     
-    private boolean addPlayerToTheGameAfterRegister(Register register){
+    private boolean addPlayerToTheGameWhenTryStart(Register register){
         for (Game game : gameList) {
             boolean isGameDidNotHaveStarted = !game.isGameReadyToStart();
             if(isGameDidNotHaveStarted){
@@ -103,8 +100,27 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
     
     @Override
-    public int tryStart(int index) throws RemoteException{
-        return gameList[index].start();
+    public int tryStart(int userID) throws RemoteException{
+        Register register = findRegisterByID(userID);
+        boolean registerWasNotFind = register == null;
+        if(registerWasNotFind){
+            return -1;
+        }
+        boolean thereWasNotHowToAddPlayer = !addPlayerToTheGameWhenTryStart(register);
+        if(thereWasNotHowToAddPlayer){
+            return -1;
+        }
+        return gameList[0].start();
+    }
+
+    private Register findRegisterByID(int userID) {
+        for (Register register : registerList) {
+            boolean isThisTheCorrectRegister = register.getUserID() == userID;
+            if(isThisTheCorrectRegister){
+                return register;
+            }          
+        }
+        return null;
     }
 
     
