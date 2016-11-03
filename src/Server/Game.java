@@ -5,7 +5,10 @@ import Exceptions.DiceException;
 import Server.Helper.GameHelper;
 import Speculate.Board;
 import Speculate.Dice;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Game {
 
@@ -13,6 +16,8 @@ public class Game {
     private Player player2;
     private Board board;
     private boolean gameReadyToStart;
+    private int gameID;
+    private static volatile ArrayList<Integer> usedIDs = new ArrayList<>();
 
     public Game() {
         this.player1 = null;
@@ -21,18 +26,38 @@ public class Game {
         this.board = new Board();
     }
     
-    public boolean start(){
+    public int start(){
         if(gameReadyToStart){          
             player1.setPlayTurn(true);
             player2.setPlayTurn(false);
-            return true;
+            int generetedID = generateID();
+            while(isThisIDInvalid(gameID)){
+                generetedID = generateID();
+            }
+            gameID = generetedID;
+            usedIDs.add(gameID);
+            return gameID;
+        }
+        return -1;
+    }
+    
+    private boolean isThisIDInvalid(int ID){
+        for (Integer usedID : usedIDs) {
+            if(usedID == ID){
+                return true;
+            }
         }
         return false;
     }
     
-    private boolean checkIfHasTwoPlayers(){
-        boolean thereIsTwoPlayers = player1 != null && player2 != null;
-        return thereIsTwoPlayers;
+    private int generateID() {
+        Date date = new Date();
+        UUID myID;
+        do {
+            myID = UUID.randomUUID();
+        } while (myID.hashCode() == -1 || myID.hashCode() == -2);
+
+        return myID.hashCode();
     }
 
     public boolean isGameReadyToStart() {

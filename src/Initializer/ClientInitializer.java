@@ -27,7 +27,7 @@ public class ClientInitializer {
             System.out.println("Insira seu nome para se cadastrar: ");
             String name = input.nextLine();
             int response = stub.registerPlayer(name);
-            while(!stub.tryStart(0));
+            while(stub.tryStart(0) ==-1);
             System.out.println("Board: " + stub.getBoard(0));
             System.out.println("response: " + response);
             stub.sendPlay(0, 1);

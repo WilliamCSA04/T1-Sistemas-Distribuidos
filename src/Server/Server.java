@@ -103,7 +103,7 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
     
     @Override
-    public boolean tryStart(int index) throws RemoteException{
+    public int tryStart(int index) throws RemoteException{
         return gameList[index].start();
     }
 

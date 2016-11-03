@@ -35,6 +35,7 @@ public class Register {
             generatedID = generateID();
         }
         userID = generatedID;
+        usedIDs.add(userID);
         state = true;
 
         return true;
