@@ -27,6 +27,7 @@ public class ClientInitializer {
             System.out.println("Insira seu nome para se cadastrar: ");
             String name = input.nextLine();
             boolean response = stub.registerPlayer(name);
+            System.out.println("Board: " + stub.getBoard(0));
             System.out.println("response: " + response);
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());

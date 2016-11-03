@@ -40,7 +40,9 @@ public class Game {
         return gameReadyToStart;
     }
     
-    
+    public String boardAsString(){
+        return board.returnBoardAsString();
+    }
     
     public synchronized boolean addPlayerToTheGame(Player player){
         boolean existPlayerOne = player1 != null;

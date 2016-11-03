@@ -81,8 +81,11 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public String getBoard(int userID) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getBoard(int index) throws RemoteException {
+        if(index >= MAX_GAMES_RUNNING){
+            throw new IllegalArgumentException();
+        }
+        return gameList[index].boardAsString();
     }
 
     @Override
