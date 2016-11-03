@@ -1,14 +1,19 @@
 package Server;
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class Server extends UnicastRemoteObject implements IServer {
-
+    
+    private static final long SERIAL_VERSION_UID = 1L;
+    private Game[] gameList;
+    private static final int MAX_GAMES_RUNNING = 50;
+            
     public Server() throws RemoteException {
-
+        gameList = new Game[MAX_GAMES_RUNNING];
+        for(int actual = 0; actual < MAX_GAMES_RUNNING; actual++){
+            gameList[actual] = new Game();
+        }
     }
 
     @Override
