@@ -91,12 +91,17 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public int sendPlay(int index, int rollTimes) throws RemoteException {
-        if(index >= MAX_GAMES_RUNNING){
-            throw new IllegalArgumentException();
+    public int sendPlay(int gameID, int userID, int rollTimes) throws RemoteException {
+        Game game = findGameByID(gameID);
+        if(game == null){
+            return -1;
         }
-        gameList[index].play(gameList[index].getPlayerThatHasToPlay(), rollTimes);
-        return 9;
+        Register register = findRegisterByID(userID);
+        if(register == null){
+            return -2;
+        }
+        game.play(register.getPlayer(), rollTimes);
+        return 0;
     }
     
     @Override
