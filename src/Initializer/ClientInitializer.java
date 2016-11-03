@@ -27,6 +27,9 @@ public class ClientInitializer {
             System.out.println("Insira seu nome para se cadastrar: ");
             String name = input.nextLine();
             int userID = stub.registerPlayer(name);
+            if(userID<0){
+                throw new Exception("userID invalido: Erro no registro");
+            }
             int gameID = stub.tryStart(userID);
             System.out.println("Esperando outro jogador...");
             while (gameID == -1) {
