@@ -23,8 +23,7 @@ public class Game {
     
     public boolean start(){
         boolean isGameReadyToStart = checkIfHasTwoPlayers();
-        if(isGameReadyToStart){
-            gameReadyToStart = true;
+        if(isGameReadyToStart){          
             player1.setPlayTurn(true);
             player2.setPlayTurn(false);
             return true;
@@ -36,6 +35,12 @@ public class Game {
         boolean thereIsTwoPlayers = player1 != null && player2 != null;
         return thereIsTwoPlayers;
     }
+
+    public boolean isGameReadyToStart() {
+        return gameReadyToStart;
+    }
+    
+    
     
     public synchronized boolean addPlayerToTheGame(Player player){
         boolean existPlayerOne = player1 != null;
@@ -49,6 +54,7 @@ public class Game {
                     return false;
                 }
                 player2 = player;
+                gameReadyToStart = true;
                 return true;
             }
         }else{

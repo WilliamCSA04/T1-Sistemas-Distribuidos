@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class ClientInitializer {
     
-    Scanner input = new Scanner(System.in);
+    private static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -24,7 +24,9 @@ public class ClientInitializer {
         try {
             Registry registry = LocateRegistry.getRegistry(host);
             IServer stub = (IServer) registry.lookup("Server");
-            String response = stub.getBoard(0);
+            System.out.println("Insira seu nome para se cadastrar: ");
+            String name = input.nextLine();
+            boolean response = stub.registerPlayer(name);
             System.out.println("response: " + response);
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Client;
+package Server;
 
+import Client.Player;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,13 +13,13 @@ import java.util.UUID;
  *
  * @author realnetwoking
  */
-public class Client {
+public class Register {
 
     private volatile boolean state;
     private Player player;
     private int userID;
 
-    public Client() {
+    public Register() {
         state = false;
     }
 
