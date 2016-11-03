@@ -130,12 +130,12 @@ public class Server extends UnicastRemoteObject implements IServer {
             return -3;
         }
         Game game = addPlayerToTheGameWhenTryStart(register);
-//        boolean thereWasNotHowToAddPlayer = game == null;
-//        if(thereWasNotHowToAddPlayer){
-//            return -2;
-//        }
-        gameList[0].addPlayerToTheGame(register.getPlayer());
-        return gameList[0].start();
+        boolean thereWasNotHowToAddPlayer = game == null;
+        if(thereWasNotHowToAddPlayer){
+            return -2;
+        }
+        game.addPlayerToTheGame(register.getPlayer());
+        return game.start();
     }
 
     private Register findRegisterByID(int userID) throws RemoteException{

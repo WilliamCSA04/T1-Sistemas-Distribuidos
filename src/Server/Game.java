@@ -5,12 +5,12 @@ import Exceptions.DiceException;
 import Server.Helper.GameHelper;
 import Speculate.Board;
 import Speculate.Dice;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Game {
+public class Game implements Serializable {
 
     private Player player1;
     private Player player2;
