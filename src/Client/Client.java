@@ -42,5 +42,13 @@ public class Client {
 
         return myID.hashCode();
     }
+    
+    public Player getPlayer(){
+        return player;
+    }
+    
+    public int getUserID(){
+        return userID;
+    }
 
 }
