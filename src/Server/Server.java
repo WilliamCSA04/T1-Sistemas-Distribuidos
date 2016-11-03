@@ -106,7 +106,14 @@ public class Server extends UnicastRemoteObject implements IServer {
 
     @Override
     public int finishSession(int userID) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            int end  = -1;
+//            for(Register play : clientList){
+//                if(play.getUserID() == userID){
+//                    end = play.gameOver();
+//                    break;
+//                }
+//            }
+            return end;
     }
 
     @Override
