@@ -15,23 +15,20 @@ import java.rmi.RemoteException;
  * @author realnetwoking
  */
 public class ServerInitializer {
-    
-    private static final int NUMBER_OF_GAMES = 50;
-    
-    public static void main(String[] args) {
-		try {
-			java.rmi.registry.LocateRegistry.createRegistry(1099);
-			System.out.println("RMI registry ready.");
-		} catch (RemoteException e) {
-			System.out.println("RMI registry already running.");
-		}
-		try {
-                        Naming.rebind ("Speculate", new Server(NUMBER_OF_GAMES));
-			System.out.println ("PidServer is ready.");
-		} catch (RemoteException | MalformedURLException e) {
-			System.out.println ("PidServer failed:");
-			e.printStackTrace();
-		}
-}
-    
+
+    public static void main(String args[]) {
+        try {
+            java.rmi.registry.LocateRegistry.createRegistry(1099);
+            System.out.println("RMI registry ready.");
+        } catch (RemoteException e) {
+            System.out.println("RMI registry already running.");
+        }
+        try {
+            Naming.rebind("Server", new Server());
+            System.out.println("PidServer is ready.");
+        } catch (RemoteException | MalformedURLException e) {
+            System.out.println("PidServer failed:");
+            e.printStackTrace();
+        }
+    }
 }
