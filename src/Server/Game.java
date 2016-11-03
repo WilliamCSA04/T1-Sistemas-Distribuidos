@@ -17,7 +17,6 @@ public class Game {
     private Board board;
     private boolean gameReadyToStart;
     private int gameID;
-    private static ArrayList<Integer> usedIDs = new ArrayList<>();
 
     public Game() {
         this.player1 = null;
@@ -33,12 +32,7 @@ public class Game {
             gameReadyToStart = true;
             player1.setPlayTurn(true);
             player2.setPlayTurn(false);
-            int generetedID = generateID();
-//            while(isThisIDInvalid(gameID)){
-//                generetedID = generateID();
-//            }
-            gameID = generetedID;
-            //usedIDs.add(gameID);
+            gameID = generateID();
             return gameID;
         }
         return -1;
@@ -48,16 +42,7 @@ public class Game {
         return gameID;
     }
     
-    
-    
-    private boolean isThisIDInvalid(int ID){
-        for (Integer usedID : usedIDs) {
-            if(usedID == ID){
-                return true;
-            }
-        }
-        return false;
-    }
+   
     
     private int generateID() {
         Date date = new Date();

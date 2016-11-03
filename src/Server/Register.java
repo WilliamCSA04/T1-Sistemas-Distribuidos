@@ -19,7 +19,6 @@ public class Register {
     private volatile boolean state;
     private Player player;
     private int userID;
-    private static ArrayList<Integer> usedIDs = new ArrayList<>();
 
     public Register() {
         state = false;
@@ -30,25 +29,12 @@ public class Register {
             return false;
         }
         player = new Player(name);
-        int generatedID = generateID();
-//        while(isThisIDInvalid(generatedID)){
-//            generatedID = generateID();
-//        }
-        userID = generatedID;
-//        usedIDs.add(userID);
+        userID = generateID();
         state = true;
 
         return true;
     }
-    
-    private boolean isThisIDInvalid(int ID){
-        for (Integer usedID : usedIDs) {
-            if(usedID == ID){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     private int generateID() {
         Date date = new Date();
