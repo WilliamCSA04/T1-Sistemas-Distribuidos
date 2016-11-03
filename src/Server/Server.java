@@ -64,17 +64,17 @@ public class Server extends UnicastRemoteObject implements IServer {
         return false;
     }
     
-    private boolean addPlayerToTheGameWhenTryStart(Register register){
+    private Game addPlayerToTheGameWhenTryStart(Register register){
         for (Game game : gameList) {
             boolean isGameDidNotHaveStarted = !game.isGameReadyToStart();
             if(isGameDidNotHaveStarted){
                 game.addPlayerToTheGame(register.getPlayer());
-                return true;
+                return game;
             }
             
             
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -108,11 +108,12 @@ public class Server extends UnicastRemoteObject implements IServer {
         if(registerWasNotFind){
             return -1;
         }
-        boolean thereWasNotHowToAddPlayer = !addPlayerToTheGameWhenTryStart(register);
+        Game game = addPlayerToTheGameWhenTryStart(register);
+        boolean thereWasNotHowToAddPlayer = game == null;
         if(thereWasNotHowToAddPlayer){
             return -1;
         }
-        return gameList[0].start();
+        return game.start();
     }
 
     private Register findRegisterByID(int userID) {
