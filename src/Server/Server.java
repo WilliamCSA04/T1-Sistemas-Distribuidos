@@ -106,12 +106,12 @@ public class Server extends UnicastRemoteObject implements IServer {
         Register register = findRegisterByID(userID);
         boolean registerWasNotFind = register == null;
         if(registerWasNotFind){
-            return -1;
+            return -3;
         }
         Game game = addPlayerToTheGameWhenTryStart(register);
         boolean thereWasNotHowToAddPlayer = game == null;
         if(thereWasNotHowToAddPlayer){
-            return -1;
+            return -2;
         }
         return game.start();
     }

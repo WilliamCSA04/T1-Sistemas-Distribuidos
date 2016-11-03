@@ -74,7 +74,7 @@ public class Game {
         return board.returnBoardAsString();
     }
     
-    public synchronized boolean addPlayerToTheGame(Player player){
+    public boolean addPlayerToTheGame(Player player){
         boolean existPlayerOne = player1 != null;
         if(existPlayerOne){
             boolean existPlayerTwo = player2 != null;
