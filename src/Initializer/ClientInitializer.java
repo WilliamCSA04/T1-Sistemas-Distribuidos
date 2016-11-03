@@ -26,7 +26,7 @@ public class ClientInitializer {
             IServer stub = (IServer) registry.lookup("Server");
             System.out.println("Insira seu nome para se cadastrar: ");
             String name = input.nextLine();
-            boolean response = stub.registerPlayer(name);
+            int response = stub.registerPlayer(name);
             while(!stub.tryStart(0));
             System.out.println("Board: " + stub.getBoard(0));
             System.out.println("response: " + response);

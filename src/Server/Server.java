@@ -20,26 +20,26 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public boolean registerPlayer(String name) throws RemoteException {
+    public int registerPlayer(String name) throws RemoteException {
         boolean isThisPlayerAlreadyCreated = checkIfThereIsPlayerWithSameName(name);
         if(isThisPlayerAlreadyCreated){
-            return false;
+            return -1;
         }
         Register register = new Register();
         boolean registerWasNotSuccessful = !register.registerPlayer(name);
         if(registerWasNotSuccessful){
-            return false;
+            return -2;
         }
         boolean thereWasNoMoreSpaceForPlayers = !addRegisterIntoNullSpace(register);
         if(thereWasNoMoreSpaceForPlayers){
-            return false;
+            return -3;
         }
         boolean thereWasNotHowToAddPlayer = !addPlayerToTheGameAfterRegister(register);
         if(thereWasNotHowToAddPlayer){
-            return false;
+            return -4;
         }
         
-        return true;
+        return register.getUserID();
     }
     
     private boolean checkIfThereIsPlayerWithSameName(String name){
