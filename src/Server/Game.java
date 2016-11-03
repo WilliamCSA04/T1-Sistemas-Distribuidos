@@ -17,7 +17,7 @@ public class Game {
     private Board board;
     private boolean gameReadyToStart;
     private int gameID;
-    private static volatile ArrayList<Integer> usedIDs = new ArrayList<>();
+    private static ArrayList<Integer> usedIDs = new ArrayList<>();
 
     public Game() {
         this.player1 = null;
@@ -115,7 +115,6 @@ public class Game {
         }
         try {
             rollDice(rollDiceTimes, player);
-            System.out.println(board.returnBoardAsString());
             if(isGameOver(player)){
                 return 1;
             }
@@ -140,7 +139,6 @@ public class Game {
         int leftBalls = player.getActualBallsQuantity();
         boolean playerDoesNotHaveBalls = leftBalls == 0;
         if(playerDoesNotHaveBalls){
-            System.out.println("Vencedor: " + player.getName());
             return true;
         }
         return false;

@@ -19,7 +19,7 @@ public class Register {
     private volatile boolean state;
     private Player player;
     private int userID;
-    private static volatile ArrayList<Integer> usedIDs = new ArrayList<>();
+    private static ArrayList<Integer> usedIDs = new ArrayList<>();
 
     public Register() {
         state = false;
