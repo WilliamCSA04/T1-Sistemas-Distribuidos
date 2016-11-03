@@ -67,6 +67,13 @@ public class Server extends UnicastRemoteObject implements IServer {
         return true;
     }
     
+    /**
+    * Add register into null space.
+    * To registered a register and check if there is register into null space
+    *
+    * @param newRegister new register for the register
+    * @throws java.rmi.RemoteException
+    */
     private boolean addRegisterIntoNullSpace(Register newRegister) throws RemoteException{
         for (int actual = 0; actual < MAX_PLAYERS_ON_SERVER; actual++) {
             boolean isEmptySpace = registerList[actual] == null;
