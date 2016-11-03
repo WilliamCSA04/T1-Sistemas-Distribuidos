@@ -8,12 +8,15 @@ package Initializer;
 import Server.IServer;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Scanner;
 
 /**
  *
  * @author realnetwoking
  */
 public class ClientInitializer {
+    
+    Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -28,4 +31,6 @@ public class ClientInitializer {
             e.printStackTrace();
         }
     }
+    
+    
 }
