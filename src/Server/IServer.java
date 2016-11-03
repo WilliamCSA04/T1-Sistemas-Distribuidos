@@ -20,4 +20,5 @@ public interface IServer extends Remote{
     public int sendPlay(int gameID, int userID, int rollTimes) throws RemoteException;
     public int tryStart(int userID) throws RemoteException;
     public boolean itsMyTurn(int userID, int gameID) throws RemoteException;
+    public String playerStatus(int userID) throws RemoteException;
 }

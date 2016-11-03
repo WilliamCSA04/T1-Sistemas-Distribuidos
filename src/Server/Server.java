@@ -100,8 +100,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         if(register == null){
             return -2;
         }
-        game.play(register.getPlayer(), rollTimes);
-        return 0;
+        return game.play(register.getPlayer(), rollTimes);
     }
     
     @Override
@@ -145,6 +144,15 @@ public class Server extends UnicastRemoteObject implements IServer {
         boolean itsThisPlayersTurn = game.getPlayerThatHasToPlay().equals(register.getPlayer());
         return itsThisPlayersTurn;
     }
+
+    @Override
+    public String playerStatus(int userID) throws RemoteException {
+        Register register = findRegisterByID(userID);
+        String playerStatus = register.getPlayer().playerStatus();
+        return playerStatus;
+    }
+    
+    
 
     
 

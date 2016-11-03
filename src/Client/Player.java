@@ -41,6 +41,11 @@ public class Player {
         return name;
     }
     
+    public String playerStatus(){
+        String status = "Name: " + name + ", Actual balls quantity: " + actualBallsQuantity;
+        return status;
+    }
+    
 
     
     
