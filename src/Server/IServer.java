@@ -22,4 +22,5 @@ public interface IServer extends Remote{
     public boolean itsMyTurn(int userID) throws RemoteException;
     public String playerStatus(int userID) throws RemoteException;
     public int requestToEnterInGame(int userID) throws RemoteException;
+    public boolean checkForForceGameOver(int gameID) throws RemoteException;
 }

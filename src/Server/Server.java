@@ -181,4 +181,10 @@ public class Server extends UnicastRemoteObject implements IServer {
         return game.getGameID();
     }
 
+    @Override
+    public boolean checkForForceGameOver(int gameID) throws RemoteException {
+        Game game = findGameByID(gameID);
+        return game.checkForForceGameOver();
+    }
+
 }

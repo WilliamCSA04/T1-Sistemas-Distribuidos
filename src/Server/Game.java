@@ -17,11 +17,12 @@ public class Game {
     private Board board;
     private boolean gameReadyToStart;
     private int gameID = 0;
+    private boolean forceGameOver;
 
     public Game() {
         defaultConfig();
-        this.board = new Board();
         gameID = generateID();
+        forceGameOver = false;
     }
 
     public int start() {
@@ -86,14 +87,25 @@ public class Game {
         boolean isPlayerTurn = player.isPlayTurn();
         return isPlayerTurn;
     }
+    
+    public boolean checkForForceGameOver(){
+        if(this.forceGameOver){
+            this.forceGameOver = false;
+            defaultConfig();
+            return true;
+        }
+        return false;
+    }
 
     public int play(Player player, int rollDiceTimes) {
+        
         if (!gameReadyToStart) {
             return -2;
         }
-        boolean forceGameOver = rollDiceTimes==0;
-        if (rollDiceTimes==0) {
-            defaultConfig();
+        boolean playerWantsToQuit = rollDiceTimes==0;
+        if (playerWantsToQuit) {
+            forceGameOver = true;
+            afterTurn();
             return 2;
         }
         boolean isNotPlayerAllowedToPlay = !checkIfPlayerIsAllowedToPlay(player);
@@ -118,6 +130,7 @@ public class Game {
         player1 = null;
         player2 = null;
         gameReadyToStart = false;
+        board = new Board();
     }
 
     public Player getPlayerThatHasToPlay() {

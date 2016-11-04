@@ -28,35 +28,42 @@ public class ClientInitializer {
             String name = input.nextLine();
             int userID = stub.registerPlayer(name);
             System.out.println("Registrado!");
-            
-            System.out.println("Esperando outro jogador...");
-            int gameID = stub.requestToEnterInGame(userID);
-            int startResult;
-            do{
-                startResult = stub.tryStart(userID, gameID);
-            }
-            while (startResult == -1);
-            System.out.println("response: " + userID);
-            while (true) {
-                System.out.println("Jogo iniciado!");
-                System.out.println("Codigo do jogo: " + gameID);
-                System.out.println("Espere sua vez...");
-                while (!stub.itsMyTurn(userID));
-                System.out.println("Quantas vezes deseja jogar o dado?");
-                String rollTimes = input.nextLine();
-                if(rollTimes == "sair"){
-                    stub.finishSession(userID);
-                    System.out.println("Partida encerrada com sucesso!");
-                    break;
+
+            String option = "";
+            System.out.println("======BEM-VINDO======");
+            System.out.println("usuario: " + name);
+            System.out.println("codigo: " + userID);
+
+            do {
+
+                System.out.println("Esperando outro jogador...");
+                int gameID = stub.requestToEnterInGame(userID);
+                int startResult;
+                do {
+                    startResult = stub.tryStart(userID, gameID);
+                } while (startResult == -1);
+                while (true) {
+                    System.out.println("Jogo iniciado!");
+                    System.out.println("Codigo do jogo: " + gameID);
+                    System.out.println("Espere sua vez...");
+                    while (!stub.itsMyTurn(userID));
+                    System.out.println("Quantas vezes deseja jogar o dado?");
+                    String rollTimes = input.nextLine();
+                    if(stub.checkForForceGameOver(gameID)){
+                        System.out.println("Seu adversário saiu do jogo");
+                        break;
+                    }
+                    int result = stub.sendPlay(gameID, userID, Integer.parseInt(rollTimes));
+                    if (result == 1) {
+                        System.out.println("PARABENS!!! VOCÊ VENCEU O JOGO :D");
+                        break;
+                    } else{
+                        
+                    }
+                    System.out.println(stub.playerStatus(userID));
+                    System.out.println("Board: " + stub.getBoard(gameID));
                 }
-                int result = stub.sendPlay(gameID, userID, Integer.parseInt(rollTimes));
-                if(result == 1){
-                    System.out.println("PARABENS!!! VOCÊ VENCEU O JOGO :D");
-                    break;
-                }
-                System.out.println(stub.playerStatus(userID));
-                System.out.println("Board: " + stub.getBoard(gameID));
-            }
+            } while (!option.equals("0"));
 
         } catch (Exception e) {
             System.err.println("Client exception: " + e.toString());
