@@ -121,7 +121,7 @@ public class Game {
             afterTurn();
             return 0;
         } catch (DiceException ex) {
-            return -1;
+            return -3;
         }
 
     }

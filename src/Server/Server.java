@@ -121,11 +121,11 @@ public class Server extends UnicastRemoteObject implements IServer {
     public int sendPlay(int gameID, int userID, int rollTimes) throws RemoteException {
         Game game = findGameByID(gameID);
         if (game == null) {
-            return -1;
+            return -4;
         }
         Register register = findRegisterByID(userID);
         if (register == null) {
-            return -2;
+            return -5;
         }
         return game.play(register.getPlayer(), rollTimes);
     }
@@ -135,7 +135,7 @@ public class Server extends UnicastRemoteObject implements IServer {
         Register register = findRegisterByID(userID);
         boolean registerWasNotFind = register == null;
         if (registerWasNotFind) {
-            return -3;
+            return -2;
         }
         Game game = findGameByID(gameID);
         return game.start();
@@ -178,6 +178,10 @@ public class Server extends UnicastRemoteObject implements IServer {
     public int requestToEnterInGame(int userID) throws RemoteException {
         Register register = findRegisterByID(userID);
         Game game = addPlayerToTheGameWhenTryStart(register);
+        boolean wasNotAbleToPutThisRegisterToPlay = game == null;
+        if(wasNotAbleToPutThisRegisterToPlay){
+            return -1;
+        }
         return game.getGameID();
     }
 
