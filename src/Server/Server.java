@@ -117,6 +117,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         return game.boardAsString();
     }
 
+    /**
+    * Finish session. Calls the method terminating the match freeing server 
+    * resources. 
+    *
+    * @param userID user id chosen
+    * @return code boolean
+    * @throws java.rmi.RemoteException
+    */
     @Override
     public boolean finishSession(int userID) throws RemoteException {
 
