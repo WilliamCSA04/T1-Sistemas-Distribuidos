@@ -200,6 +200,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         return null;
     }
 
+     /**
+    * Find game by ID
+    * Calls the method that finds id of the game  
+    *
+    * @param userID user id of the user
+    * @return game with its game id
+    * @throws java.rmi.RemoteException
+    */
     private Game findGameByID(int gameID) throws RemoteException {
         for (Game game : gameList) {
             boolean isThisTheCorrectGame = game.getGameID() == gameID;
