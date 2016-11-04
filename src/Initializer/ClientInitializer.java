@@ -79,7 +79,15 @@ public class ClientInitializer {
                         exit = true;
                         break;
                     }
-                    result = stub.sendPlay(gameID, userID, Integer.parseInt(rollTimes));
+                    int rollDice;
+                    try {
+                        rollDice = Integer.parseInt(rollTimes);
+                    }catch(NumberFormatException ex){
+                        System.out.println("Caracteres invalidos, digite apenas numeros");
+                        continue;
+                    }
+                    
+                    result = stub.sendPlay(gameID, userID, rollDice);
                     if (result == 1) {
                         System.out.println("PARABENS!!! VOCÊ VENCEU O JOGO :D");
                         exit = true;
