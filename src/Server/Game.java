@@ -20,9 +20,7 @@ public class Game {
     private boolean forceGameOver;
 
     public Game() {
-        this.player1 = null;
-        this.player2 = null;
-        this.gameReadyToStart = false;
+        defaultConfig();
         this.board = new Board();
         gameID = generateID();
         forceGameOver = false;
