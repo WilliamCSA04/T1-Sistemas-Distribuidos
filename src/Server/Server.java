@@ -123,6 +123,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         return game.start();
     }
 
+    /**
+    * Its my turn
+    * Calls the method that finds id that was registered
+    *
+    * @param userID user id of the player
+    * @return register its calls player and its play turn
+    * @throws java.rmi.RemoteException
+    */
     @Override
     public boolean itsMyTurn(int userID) throws RemoteException {
         Register register = findRegisterByID(userID);
