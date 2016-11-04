@@ -104,6 +104,13 @@ public class Server extends UnicastRemoteObject implements IServer {
         return null;
     }
 
+    /**
+     * Add a player to game when try to start . To registered a register and 
+     * check if there was started a game
+     *
+     * @param gameID game id for the register in each
+     * @throws java.rmi.RemoteException
+     */
     @Override
     public String getBoard(int gameID) throws RemoteException {
         Game game = findGameByID(gameID);
