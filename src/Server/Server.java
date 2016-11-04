@@ -27,7 +27,7 @@ public class Server extends UnicastRemoteObject implements IServer {
      * @throws java.rmi.RemoteException
      */
     @Override
-    public int registerPlayer(String name) throws RemoteException {
+    public synchronized int registerPlayer(String name) throws RemoteException {
         boolean isThisPlayerAlreadyCreated = checkIfThereIsPlayerWithSameName(name);
         if (isThisPlayerAlreadyCreated) {
             return -1;
@@ -67,7 +67,7 @@ public class Server extends UnicastRemoteObject implements IServer {
     * @throws java.rmi.RemoteException
     */
     @Override
-    public boolean finishSession(int userID) throws RemoteException {
+    public synchronized boolean finishSession(int userID) throws RemoteException {
 
         for (int actual = 0; actual < MAX_PLAYERS_ON_SERVER; actual++) {
             Register actualRegister = registerList[actual];
@@ -137,6 +137,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         return register.getPlayer().isPlayTurn();
     }
 
+    /**
+    * Player status
+    * Calls the method that finds id that was registered
+    *
+    * @param userID user id of the player
+    * @return playerStatus 
+    * @throws java.rmi.RemoteException
+    */
     @Override
     public String playerStatus(int userID) throws RemoteException {
         Register register = findRegisterByID(userID);
