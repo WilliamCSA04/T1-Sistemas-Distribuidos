@@ -41,7 +41,6 @@ public class Server extends UnicastRemoteObject implements IServer {
         if (thereWasNoMoreSpaceForPlayers) {
             return -3;
         }
-
         return register.getUserID();
     }
 
@@ -71,6 +70,9 @@ public class Server extends UnicastRemoteObject implements IServer {
 
         for (int actual = 0; actual < MAX_PLAYERS_ON_SERVER; actual++) {
             Register actualRegister = registerList[actual];
+            if(actualRegister==null){
+                continue;
+            }
             boolean isThisTheCorrectRegister = actualRegister.getUserID() == userID;
             if(isThisTheCorrectRegister){
                 registerList[actual] = null;
@@ -134,6 +136,9 @@ public class Server extends UnicastRemoteObject implements IServer {
     @Override
     public boolean itsMyTurn(int userID) throws RemoteException {
         Register register = findRegisterByID(userID);
+        if(register==null){
+            return false;
+        }
         return register.getPlayer().isPlayTurn();
     }
 
@@ -253,6 +258,9 @@ public class Server extends UnicastRemoteObject implements IServer {
     */
     private Register findRegisterByID(int userID) throws RemoteException {
         for (Register register : registerList) {
+            if(register==null){
+                continue;
+            }
             boolean isThisTheCorrectRegister = register.getUserID() == userID;
             if (isThisTheCorrectRegister) {
                 return register;

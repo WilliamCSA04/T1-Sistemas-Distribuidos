@@ -67,18 +67,17 @@ public class ClientInitializer {
             System.out.println("Espere sua vez...");
             while (true) {
 
-                while (!stub.itsMyTurn(userID));
+                while (!stub.itsMyTurn(userID)){
+                    if(stub.checkForForceGameOver(gameID)){
+                        break;
+                    }
+                }
                 int result = -3;
                 boolean exit = false;
                 boolean invalidRoll = result == -3;
                 while (result == -3) {
                     System.out.println("Quantas vezes deseja jogar o dado?");
                     String rollTimes = input.nextLine();
-                    if (stub.checkForForceGameOver(gameID)) {
-                        System.out.println("Seu adversário saiu do jogo");
-                        exit = true;
-                        break;
-                    }
                     int rollDice;
                     try {
                         rollDice = Integer.parseInt(rollTimes);
@@ -88,6 +87,22 @@ public class ClientInitializer {
                     }
                     
                     result = stub.sendPlay(gameID, userID, rollDice);
+                    
+                    if(rollDice == 0){
+                        stub.finishSession(userID);
+                        exit=true;
+                        System.out.println("Adeus");
+                        break;
+                    }
+                    
+                    if (stub.checkForForceGameOver(gameID)) {
+                        System.out.println("Seu adversário saiu do jogo");
+                        exit = true;
+                        break;
+                    }
+                    
+                    
+                    
                     if (result == 1) {
                         System.out.println("PARABENS!!! VOCÊ VENCEU O JOGO :D");
                         exit = true;
