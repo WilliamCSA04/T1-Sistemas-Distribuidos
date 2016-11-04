@@ -24,7 +24,6 @@ public class ClientInitializer {
         try {
             Registry registry = LocateRegistry.getRegistry(host);
             IServer stub = (IServer) registry.lookup("Server");
-            IServer cm = null;
             System.out.println("Insira seu nome para se cadastrar: ");
             String name = input.nextLine();
             int userID = stub.registerPlayer(name);
@@ -46,7 +45,7 @@ public class ClientInitializer {
                 System.out.println("Quantas vezes deseja jogar o dado?");
                 String rollTimes = input.nextLine();
                 if(rollTimes == "sair"){
-                    cm.finishSession(userID);
+                    stub.finishSession(userID);
                     System.out.println("Partida encerrada com sucesso!");
                     break;
                 }

@@ -10,13 +10,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class Game{
+public class Game {
 
     private Player player1;
     private Player player2;
     private Board board;
     private boolean gameReadyToStart;
     private int gameID = 0;
+    private boolean forceGameOver;
 
     public Game() {
         this.player1 = null;
@@ -24,12 +25,13 @@ public class Game{
         this.gameReadyToStart = false;
         this.board = new Board();
         gameID = generateID();
+        forceGameOver = false;
     }
-    
-    public int start(){
+
+    public int start() {
         gameReadyToStart = player1 != null && player2 != null;
-        if(gameReadyToStart){            
-            gameReadyToStart = true;    
+        if (gameReadyToStart) {
+            gameReadyToStart = true;
             return gameID;
         }
         return -1;
@@ -38,9 +40,7 @@ public class Game{
     public int getGameID() {
         return gameID;
     }
-    
-   
-    
+
     private int generateID() {
         Date date = new Date();
         UUID myID;
@@ -54,34 +54,34 @@ public class Game{
     public boolean isGameReadyToStart() {
         return gameReadyToStart;
     }
-    
-    public String boardAsString(){
+
+    public String boardAsString() {
         return board.returnBoardAsString();
     }
-    
-    public boolean addPlayerToTheGame(Player player){
+
+    public boolean addPlayerToTheGame(Player player) {
         boolean existPlayerOne = player1 != null;
-        if(existPlayerOne){
+        if (existPlayerOne) {
             boolean existPlayerTwo = player2 != null;
-            if(existPlayerTwo){
+            if (existPlayerTwo) {
                 return false;
-            }else{
+            } else {
                 boolean isTheNewPlayerEqualsToTheFirstPlayer = checkIfThePlayersAreEquals(player);
-                if(isTheNewPlayerEqualsToTheFirstPlayer){
+                if (isTheNewPlayerEqualsToTheFirstPlayer) {
                     return false;
                 }
                 player2 = player;
                 player2.setPlayTurn(false);
                 return true;
             }
-        }else{
+        } else {
             player1 = player;
             player1.setPlayTurn(true);
             return true;
         }
     }
-    
-    private boolean checkIfThePlayersAreEquals(Player player){
+
+    private boolean checkIfThePlayersAreEquals(Player player) {
         boolean isTheNewPlayerTheSameObject = player.equals(player1);
         return isTheNewPlayerTheSameObject;
     }
@@ -92,8 +92,12 @@ public class Game{
     }
 
     public int play(Player player, int rollDiceTimes) {
-        if(!gameReadyToStart){
+        if (!gameReadyToStart) {
             return -2;
+        }
+        if (forceGameOver) {
+            defaultConfig();
+            return 2;
         }
         boolean isNotPlayerAllowedToPlay = !checkIfPlayerIsAllowedToPlay(player);
         if (isNotPlayerAllowedToPlay) {
@@ -101,7 +105,8 @@ public class Game{
         }
         try {
             rollDice(rollDiceTimes, player);
-            if(isGameOver(player)){
+            if (isGameOver(player)) {
+                defaultConfig();
                 return 1;
             }
             afterTurn();
@@ -109,22 +114,27 @@ public class Game{
         } catch (DiceException ex) {
             return -1;
         }
-        
 
     }
-    
-    public Player getPlayerThatHasToPlay(){
+
+    private void defaultConfig() {
+        player1 = null;
+        player2 = null;
+        gameReadyToStart = false;
+    }
+
+    public Player getPlayerThatHasToPlay() {
         boolean isFirstPlayersTurn = player1.isPlayTurn();
-        if(isFirstPlayersTurn){
+        if (isFirstPlayersTurn) {
             return player1;
         }
         return player2;
     }
-    
-    private boolean isGameOver(Player player){
+
+    private boolean isGameOver(Player player) {
         int leftBalls = player.getActualBallsQuantity();
         boolean playerDoesNotHaveBalls = leftBalls == 0;
-        if(playerDoesNotHaveBalls){
+        if (playerDoesNotHaveBalls) {
             return true;
         }
         return false;
@@ -155,27 +165,27 @@ public class Game{
         actualBallsQuantity--;
         player.setActualBallsQuantity(actualBallsQuantity);
         boolean haveToUpdateBallsOuOfGame = diceResult == 6;
-        if(haveToUpdateBallsOuOfGame){
+        if (haveToUpdateBallsOuOfGame) {
             updateBallsOutOfGame();
-        }else{
+        } else {
             updateSpacesForReduce(diceResult);
         }
-        
+
     }
-    
-    private void updateSpacesForAdd(int diceResult){
+
+    private void updateSpacesForAdd(int diceResult) {
         String spaces = board.getSpaces();
         spaces = GameHelper.updateSpacesForAddHelper(diceResult, spaces);
         board.setSpaces(spaces);
     }
-    
-    private void updateSpacesForReduce(int diceResult){
+
+    private void updateSpacesForReduce(int diceResult) {
         String spaces = board.getSpaces();
         spaces = GameHelper.updateSpacesForReduceHelper(diceResult, spaces);
         board.setSpaces(spaces);
     }
-    
-    private void updateBallsOutOfGame(){
+
+    private void updateBallsOutOfGame() {
         String ballsOutOfGame = board.getBallsOutOfGame();
         ballsOutOfGame = GameHelper.updateBallsOutOfGameHelper(ballsOutOfGame);
         board.setBallsOutOfGame(ballsOutOfGame);
