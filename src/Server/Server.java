@@ -85,6 +85,13 @@ public class Server extends UnicastRemoteObject implements IServer {
         return false;
     }
 
+    /**
+     * Add a player to game when try to start . To registered a register and 
+     * check if there was started a game
+     *
+     * @param register register for the register
+     * @throws java.rmi.RemoteException
+     */
     private Game addPlayerToTheGameWhenTryStart(Register register) throws RemoteException {
         for (Game game : gameList) {
             boolean isGameDidNotHaveStarted = !game.isGameReadyToStart();
