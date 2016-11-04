@@ -4,96 +4,95 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class Server extends UnicastRemoteObject implements IServer {
-    
+
     private static final long SERIAL_VERSION_UID = 1L;
     private Game[] gameList;
     private Register[] registerList;
     private static final int MAX_GAMES_RUNNING = 50;
-    private static final int MAX_PLAYERS_ON_SERVER = MAX_GAMES_RUNNING*2;
-            
+    private static final int MAX_PLAYERS_ON_SERVER = MAX_GAMES_RUNNING * 2;
+
     public Server() throws RemoteException {
         gameList = new Game[MAX_GAMES_RUNNING];
-        for(int actual = 0; actual < MAX_GAMES_RUNNING; actual++){
+        for (int actual = 0; actual < MAX_GAMES_RUNNING; actual++) {
             gameList[actual] = new Game();
         }
         registerList = new Register[MAX_PLAYERS_ON_SERVER];
     }
-    
+
     /**
-    * Register Palyer.
-    * To receive a name and invoke a method of the registered player of server
-    *
-    * @param name player name for the register
-    * @throws java.rmi.RemoteException
-    */
+     * Register Palyer. To receive a name and invoke a method of the registered
+     * player of server
+     *
+     * @param name player name for the register
+     * @throws java.rmi.RemoteException
+     */
     @Override
     public int registerPlayer(String name) throws RemoteException {
         boolean isThisPlayerAlreadyCreated = checkIfThereIsPlayerWithSameName(name);
-        if(isThisPlayerAlreadyCreated){
+        if (isThisPlayerAlreadyCreated) {
             return -1;
         }
         Register register = new Register();
         boolean registerWasNotSuccessful = !register.registerPlayer(name);
-        if(registerWasNotSuccessful){
+        if (registerWasNotSuccessful) {
             return -2;
         }
         boolean thereWasNoMoreSpaceForPlayers = !addRegisterIntoNullSpace(register);
-        if(thereWasNoMoreSpaceForPlayers){
+        if (thereWasNoMoreSpaceForPlayers) {
             return -3;
         }
-        
-        
+
         return register.getUserID();
     }
-    
+
     /**
-    * Check if there is player with the same name.
-    * To receive a name and invoke a method of the registered player of server and check if there is player with the same name
-    *
-    * @param name player name for the register
-    * @throws java.rmi.RemoteException
-    */
-    private boolean checkIfThereIsPlayerWithSameName(String name) throws RemoteException{
+     * Check if there is player with the same name. To receive a name and invoke
+     * a method of the registered player of server and check if there is player
+     * with the same name
+     *
+     * @param name player name for the register
+     * @throws java.rmi.RemoteException
+     */
+    private boolean checkIfThereIsPlayerWithSameName(String name) throws RemoteException {
         for (Register register : registerList) {
-            if(register == null){
+            if (register == null) {
                 return false;
             }
             String playerName = register.getPlayer().getName();
             boolean theNewPlayerHaveTheSameName = playerName.equals(name);
-            if(theNewPlayerHaveTheSameName){
+            if (theNewPlayerHaveTheSameName) {
                 return false;
             }
         }
         return true;
     }
-    
+
     /**
-    * Add register into null space.
-    * To registered a register and check if there is register into null space
-    *
-    * @param newRegister new register for the register
-    * @throws java.rmi.RemoteException
-    */
-    private boolean addRegisterIntoNullSpace(Register newRegister) throws RemoteException{
+     * Add register into null space. To registered a register and check if there
+     * is register into null space
+     *
+     * @param newRegister new register for the register
+     * @throws java.rmi.RemoteException
+     */
+    private boolean addRegisterIntoNullSpace(Register newRegister) throws RemoteException {
         for (int actual = 0; actual < MAX_PLAYERS_ON_SERVER; actual++) {
             boolean isEmptySpace = registerList[actual] == null;
-            if(isEmptySpace){
+            if (isEmptySpace) {
                 registerList[actual] = newRegister;
                 return true;
             }
         }
         return false;
     }
-    
-    private Game addPlayerToTheGameWhenTryStart(Register register) throws RemoteException{
+
+    private Game addPlayerToTheGameWhenTryStart(Register register) throws RemoteException {
         for (Game game : gameList) {
             boolean isGameDidNotHaveStarted = !game.isGameReadyToStart();
-            if(isGameDidNotHaveStarted){
+            if (isGameDidNotHaveStarted) {
                 game.addPlayerToTheGame(register.getPlayer());
                 return game;
             }
-            
-            
+
         }
         return null;
     }
@@ -105,55 +104,57 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public int finishSession(int userID) throws RemoteException {
-            int end  = -1;
-            for(Register play : registerList){
-                if(play.getUserID() == userID){
-                    end = play.gameOver();
-                    break;
-                }
+    public boolean finishSession(int userID) throws RemoteException {
+
+        for (int actual = 0; actual < MAX_PLAYERS_ON_SERVER; actual++) {
+            Register actualRegister = registerList[actual];
+            boolean isThisTheCorrectRegister = actualRegister.getUserID() == userID;
+            if(isThisTheCorrectRegister){
+                registerList[actual] = null;
+                return true;
             }
-            return end;
+        }
+        return false;
     }
 
     @Override
     public int sendPlay(int gameID, int userID, int rollTimes) throws RemoteException {
         Game game = findGameByID(gameID);
-        if(game == null){
+        if (game == null) {
             return -1;
         }
         Register register = findRegisterByID(userID);
-        if(register == null){
+        if (register == null) {
             return -2;
         }
         return game.play(register.getPlayer(), rollTimes);
     }
-    
+
     @Override
-    public int tryStart(int userID, int gameID) throws RemoteException{
+    public int tryStart(int userID, int gameID) throws RemoteException {
         Register register = findRegisterByID(userID);
         boolean registerWasNotFind = register == null;
-        if(registerWasNotFind){
+        if (registerWasNotFind) {
             return -3;
         }
         Game game = findGameByID(gameID);
         return game.start();
     }
 
-    private Register findRegisterByID(int userID) throws RemoteException{
+    private Register findRegisterByID(int userID) throws RemoteException {
         for (Register register : registerList) {
             boolean isThisTheCorrectRegister = register.getUserID() == userID;
-            if(isThisTheCorrectRegister){
+            if (isThisTheCorrectRegister) {
                 return register;
-            }          
+            }
         }
         return null;
     }
-    
-    private Game findGameByID(int gameID) throws RemoteException{
+
+    private Game findGameByID(int gameID) throws RemoteException {
         for (Game game : gameList) {
             boolean isThisTheCorrectGame = game.getGameID() == gameID;
-            if(isThisTheCorrectGame){
+            if (isThisTheCorrectGame) {
                 return game;
             }
         }
@@ -179,9 +180,5 @@ public class Server extends UnicastRemoteObject implements IServer {
         Game game = addPlayerToTheGameWhenTryStart(register);
         return game.getGameID();
     }
-    
-    
-
-    
 
 }
