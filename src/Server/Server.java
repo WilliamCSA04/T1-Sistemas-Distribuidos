@@ -162,6 +162,15 @@ public class Server extends UnicastRemoteObject implements IServer {
         return game.play(register.getPlayer(), rollTimes);
     }
 
+    /**
+    * Try start
+    * Calls the method that finds a register of the game with its id to the player 
+    *
+    * @param gameID game id of the play
+    * @param userID user id of the chosen player
+    * @return game with its id for the session
+    * @throws java.rmi.RemoteException
+    */
     @Override
     public int tryStart(int userID, int gameID) throws RemoteException {
         Register register = findRegisterByID(userID);
