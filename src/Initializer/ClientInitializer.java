@@ -31,11 +31,12 @@ public class ClientInitializer {
             System.out.println("Registrado!");
             
             System.out.println("Esperando outro jogador...");
-            int gameID;
+            int gameID = stub.requestToEnterInGame(userID);
+            int startResult;
             do{
-                gameID = stub.tryStart(userID);
+                startResult = stub.tryStart(userID, gameID);
             }
-            while (gameID == -1);
+            while (startResult == -1);
             System.out.println("response: " + userID);
             while (true) {
                 System.out.println("Jogo iniciado!");

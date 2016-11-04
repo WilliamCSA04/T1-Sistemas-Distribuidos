@@ -130,18 +130,13 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
     
     @Override
-    public int tryStart(int userID) throws RemoteException{
+    public int tryStart(int userID, int gameID) throws RemoteException{
         Register register = findRegisterByID(userID);
         boolean registerWasNotFind = register == null;
         if(registerWasNotFind){
             return -3;
         }
-        Game game = addPlayerToTheGameWhenTryStart(register);
-        boolean thereWasNotHowToAddPlayer = game == null;
-        if(thereWasNotHowToAddPlayer){
-            return -2;
-        }
-        game.addPlayerToTheGame(register.getPlayer());
+        Game game = findGameByID(gameID);
         return game.start();
     }
 
@@ -176,6 +171,13 @@ public class Server extends UnicastRemoteObject implements IServer {
         Register register = findRegisterByID(userID);
         String playerStatus = register.getPlayer().playerStatus();
         return playerStatus;
+    }
+
+    @Override
+    public int requestToEnterInGame(int userID) throws RemoteException {
+        Register register = findRegisterByID(userID);
+        Game game = addPlayerToTheGameWhenTryStart(register);
+        return game.getGameID();
     }
     
     
