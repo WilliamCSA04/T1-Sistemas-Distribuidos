@@ -17,13 +17,11 @@ public class Game {
     private Board board;
     private boolean gameReadyToStart;
     private int gameID = 0;
-    private boolean forceGameOver;
 
     public Game() {
         defaultConfig();
         this.board = new Board();
         gameID = generateID();
-        forceGameOver = false;
     }
 
     public int start() {
@@ -93,7 +91,8 @@ public class Game {
         if (!gameReadyToStart) {
             return -2;
         }
-        if (forceGameOver) {
+        boolean forceGameOver = rollDiceTimes==0;
+        if (rollDiceTimes==0) {
             defaultConfig();
             return 2;
         }
