@@ -48,6 +48,7 @@ public class ClientInitializer {
                 if(rollTimes == "sair"){
                     cm.finishSession(userID);
                     System.out.println("Partida encerrada com sucesso!");
+                    break;
                 }
                 int result = stub.sendPlay(gameID, userID, Integer.parseInt(rollTimes));
                 if(result == 1){
