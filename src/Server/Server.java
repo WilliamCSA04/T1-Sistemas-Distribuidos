@@ -107,12 +107,12 @@ public class Server extends UnicastRemoteObject implements IServer {
     @Override
     public int finishSession(int userID) throws RemoteException {
             int end  = -1;
-//            for(Register play : clientList){
-//                if(play.getUserID() == userID){
-//                    end = play.gameOver();
-//                    break;
-//                }
-//            }
+            for(Register play : registerList){
+                if(play.getUserID() == userID){
+                    end = play.gameOver();
+                    break;
+                }
+            }
             return end;
     }
 

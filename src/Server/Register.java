@@ -53,5 +53,16 @@ public class Register {
     public int getUserID(){
         return userID;
     }
+    
+    public int gameOver() {
+        int status = -1;
+        if (state == true) {
+            this.state = false;
+            this.userID = 0;
+            this.player = player;
+            status = 0;
+        }
+        return status;
+    }
 
 }
