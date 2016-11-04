@@ -152,6 +152,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         return playerStatus;
     }
 
+    /**
+    * Request to enter in game
+    * Calls the method that applies to move to the chosen player.
+    *
+    * @param userID user id of the chosen player
+    * @return game with its game id for the session
+    * @throws java.rmi.RemoteException
+    */
     @Override
     public int requestToEnterInGame(int userID) throws RemoteException {
         Register register = findRegisterByID(userID);
