@@ -46,65 +46,6 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     /**
-     * Check if there is player with the same name. To receive a name and invoke
-     * a method of the registered player of server and check if there is player
-     * with the same name
-     *
-     * @param name player name for the register
-     * @throws java.rmi.RemoteException
-     */
-    private boolean checkIfThereIsPlayerWithSameName(String name) throws RemoteException {
-        for (Register register : registerList) {
-            if (register == null) {
-                return false;
-            }
-            String playerName = register.getPlayer().getName();
-            boolean theNewPlayerHaveTheSameName = playerName.equals(name);
-            if (theNewPlayerHaveTheSameName) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Add register into null space. To registered a register and check if there
-     * is register into null space
-     *
-     * @param newRegister new register for the register
-     * @throws java.rmi.RemoteException
-     */
-    private boolean addRegisterIntoNullSpace(Register newRegister) throws RemoteException {
-        for (int actual = 0; actual < MAX_PLAYERS_ON_SERVER; actual++) {
-            boolean isEmptySpace = registerList[actual] == null;
-            if (isEmptySpace) {
-                registerList[actual] = newRegister;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Add a player to game when try to start . To registered a register and 
-     * check if there was started a game
-     *
-     * @param register register for the register
-     * @throws java.rmi.RemoteException
-     */
-    private Game addPlayerToTheGameWhenTryStart(Register register) throws RemoteException {
-        for (Game game : gameList) {
-            boolean isGameDidNotHaveStarted = !game.isGameReadyToStart();
-            if (isGameDidNotHaveStarted) {
-                game.addPlayerToTheGame(register.getPlayer());
-                return game;
-            }
-
-        }
-        return null;
-    }
-
-    /**
      * Add a player to game when try to start . To registered a register and 
      * check if there was started a game
      *
@@ -182,6 +123,94 @@ public class Server extends UnicastRemoteObject implements IServer {
         return game.start();
     }
 
+    @Override
+    public boolean itsMyTurn(int userID) throws RemoteException {
+        Register register = findRegisterByID(userID);
+        return register.getPlayer().isPlayTurn();
+    }
+
+    @Override
+    public String playerStatus(int userID) throws RemoteException {
+        Register register = findRegisterByID(userID);
+        String playerStatus = register.getPlayer().playerStatus();
+        return playerStatus;
+    }
+
+    @Override
+    public int requestToEnterInGame(int userID) throws RemoteException {
+        Register register = findRegisterByID(userID);
+        Game game = addPlayerToTheGameWhenTryStart(register);
+        boolean wasNotAbleToPutThisRegisterToPlay = game == null;
+        if(wasNotAbleToPutThisRegisterToPlay){
+            return -1;
+        }
+        return game.getGameID();
+    }
+
+    @Override
+    public boolean checkForForceGameOver(int gameID) throws RemoteException {
+        Game game = findGameByID(gameID);
+        return game.checkForForceGameOver();
+    }
+    
+    /**
+     * Check if there is player with the same name. To receive a name and invoke
+     * a method of the registered player of server and check if there is player
+     * with the same name
+     *
+     * @param name player name for the register
+     * @throws java.rmi.RemoteException
+     */
+    private boolean checkIfThereIsPlayerWithSameName(String name) throws RemoteException {
+        for (Register register : registerList) {
+            if (register == null) {
+                return false;
+            }
+            String playerName = register.getPlayer().getName();
+            boolean theNewPlayerHaveTheSameName = playerName.equals(name);
+            if (theNewPlayerHaveTheSameName) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Add register into null space. To registered a register and check if there
+     * is register into null space
+     *
+     * @param newRegister new register for the register
+     * @throws java.rmi.RemoteException
+     */
+    private boolean addRegisterIntoNullSpace(Register newRegister) throws RemoteException {
+        for (int actual = 0; actual < MAX_PLAYERS_ON_SERVER; actual++) {
+            boolean isEmptySpace = registerList[actual] == null;
+            if (isEmptySpace) {
+                registerList[actual] = newRegister;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Add a player to game when try to start . To registered a register and 
+     * check if there was started a game
+     *
+     * @param register register for the register
+     * @throws java.rmi.RemoteException
+     */
+    private Game addPlayerToTheGameWhenTryStart(Register register) throws RemoteException {
+        for (Game game : gameList) {
+            boolean isGameDidNotHaveStarted = !game.isGameReadyToStart();
+            if (isGameDidNotHaveStarted) {
+                game.addPlayerToTheGame(register.getPlayer());
+                return game;
+            }
+        }
+        return null;
+    }
+    
     /**
     * Find register by ID
     * Calls the method that finds id of the user with its register to the player 
@@ -216,36 +245,6 @@ public class Server extends UnicastRemoteObject implements IServer {
             }
         }
         return null;
-    }
-
-    @Override
-    public boolean itsMyTurn(int userID) throws RemoteException {
-        Register register = findRegisterByID(userID);
-        return register.getPlayer().isPlayTurn();
-    }
-
-    @Override
-    public String playerStatus(int userID) throws RemoteException {
-        Register register = findRegisterByID(userID);
-        String playerStatus = register.getPlayer().playerStatus();
-        return playerStatus;
-    }
-
-    @Override
-    public int requestToEnterInGame(int userID) throws RemoteException {
-        Register register = findRegisterByID(userID);
-        Game game = addPlayerToTheGameWhenTryStart(register);
-        boolean wasNotAbleToPutThisRegisterToPlay = game == null;
-        if(wasNotAbleToPutThisRegisterToPlay){
-            return -1;
-        }
-        return game.getGameID();
-    }
-
-    @Override
-    public boolean checkForForceGameOver(int gameID) throws RemoteException {
-        Game game = findGameByID(gameID);
-        return game.checkForForceGameOver();
     }
 
 }
