@@ -168,7 +168,7 @@ public class Server extends UnicastRemoteObject implements IServer {
     *
     * @param gameID game id of the play
     * @param userID user id of the chosen player
-    * @return game with its id for the session
+    * @return game calls the start method
     * @throws java.rmi.RemoteException
     */
     @Override
@@ -182,6 +182,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         return game.start();
     }
 
+    /**
+    * Find register by ID
+    * Calls the method that finds id of the user with its register to the player 
+    *
+    * @param userID user id of the user
+    * @return register with a register and its user id
+    * @throws java.rmi.RemoteException
+    */
     private Register findRegisterByID(int userID) throws RemoteException {
         for (Register register : registerList) {
             boolean isThisTheCorrectRegister = register.getUserID() == userID;
