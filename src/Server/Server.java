@@ -171,6 +171,14 @@ public class Server extends UnicastRemoteObject implements IServer {
         return game.getGameID();
     }
 
+    /**
+    * Check for force game over
+    * Calls the method that finds game by id and forces the end game.
+    *
+    * @param userID user id the find game by id
+    * @return game checking that game was end.
+    * @throws java.rmi.RemoteException
+    */
     @Override
     public boolean checkForForceGameOver(int gameID) throws RemoteException {
         Game game = findGameByID(gameID);
