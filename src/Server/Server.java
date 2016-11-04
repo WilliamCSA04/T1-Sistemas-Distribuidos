@@ -139,6 +139,16 @@ public class Server extends UnicastRemoteObject implements IServer {
         return false;
     }
 
+    /**
+    * Sending play
+    * Calls the method that applies to move to the chosen player.
+    *
+    * @param gameID game id of the play
+    * @param userID user id of the chosen player
+    * @param rollTimes roll times of the play
+    * @return play with its register and roll times for the session
+    * @throws java.rmi.RemoteException
+    */
     @Override
     public int sendPlay(int gameID, int userID, int rollTimes) throws RemoteException {
         Game game = findGameByID(gameID);
