@@ -279,6 +279,9 @@ public class Server extends UnicastRemoteObject implements IServer {
     */
     private Game findGameByID(int gameID) throws RemoteException {
         for (Game game : gameList) {
+            if(game == null){
+                continue;
+            }
             boolean isThisTheCorrectGame = game.getGameID() == gameID;
             if (isThisTheCorrectGame) {
                 return game;
